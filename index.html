@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reading with Sydney</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --yellow:#FFD93D;
+    --coral:#FF6B6B;
+    --teal:#4ECDC4;
+    --purple:#A855F7;
+    --navy:#1E1B4B;
+    --white:#FFFFFF;
+    --light:#FFF9F0;
+  }
+  body{font-family:'Nunito',sans-serif;background:var(--light);color:var(--navy);overflow-x:hidden;}
+
+  /* NAV */
+  nav{background:var(--white);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(0,0,0,.08);position:sticky;top:0;z-index:100;}
+  .logo{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--coral);}
+  .logo span{color:var(--teal);}
+  nav a{text-decoration:none;color:var(--navy);font-weight:700;margin-left:1.5rem;font-size:.95rem;transition:color .2s;}
+  nav a:hover{color:var(--coral);}
+  .nav-cta{background:var(--coral);color:var(--white)!important;padding:.5rem 1.2rem;border-radius:50px;transition:transform .2s,background .2s!important;}
+  .nav-cta:hover{background:var(--purple)!important;transform:scale(1.05);}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#FFD93D 0%,#FF6B6B 50%,#A855F7 100%);padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'📚';font-size:8rem;position:absolute;top:-1rem;left:-1rem;opacity:.15;transform:rotate(-15deg);}
+  .hero::after{content:'⭐';font-size:6rem;position:absolute;bottom:1rem;right:2rem;opacity:.2;animation:spin 8s linear infinite;}
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .badge{display:inline-block;background:var(--white);color:var(--purple);font-weight:800;font-size:.85rem;padding:.4rem 1rem;border-radius:50px;margin-bottom:1.2rem;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+  .hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2.4rem,6vw,4rem);color:var(--white);line-height:1.15;text-shadow:2px 4px 12px rgba(0,0,0,.15);margin-bottom:1rem;}
+  .hero h1 em{font-style:normal;background:var(--white);color:var(--coral);padding:0 .3rem;border-radius:8px;}
+  .hero p{font-size:1.15rem;color:var(--white);max-width:600px;margin:0 auto 2rem;text-shadow:1px 2px 6px rgba(0,0,0,.15);font-weight:600;}
+  .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .btn{display:inline-block;padding:.85rem 2rem;border-radius:50px;font-weight:800;font-size:1rem;text-decoration:none;transition:transform .2s,box-shadow .2s;cursor:pointer;border:none;}
+  .btn-primary{background:var(--navy);color:var(--white);box-shadow:0 6px 20px rgba(30,27,75,.3);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(30,27,75,.4);}
+  .btn-secondary{background:var(--white);color:var(--coral);box-shadow:0 6px 20px rgba(0,0,0,.15);}
+  .btn-secondary:hover{transform:translateY(-3px);}
+  .hero-stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;}
+  .stat{background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border-radius:16px;padding:1rem 1.5rem;color:var(--white);}
+  .stat strong{display:block;font-family:'Fredoka One',cursive;font-size:1.8rem;}
+  .stat span{font-size:.85rem;font-weight:700;}
+
+  /* SECTION COMMONS */
+  section{padding:5rem 2rem;}
+  .container{max-width:1100px;margin:0 auto;}
+  .section-tag{display:inline-block;background:var(--yellow);color:var(--navy);font-weight:800;font-size:.8rem;padding:.3rem .9rem;border-radius:50px;margin-bottom:.8rem;letter-spacing:.05em;text-transform:uppercase;}
+  h2{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:.5rem;}
+  .subtitle{font-size:1.05rem;color:#555;max-width:580px;}
+
+  /* ABOUT */
+  .about{background:var(--white);}
+  .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+  .about-img{background:linear-gradient(135deg,var(--teal),var(--purple));border-radius:24px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:7rem;box-shadow:0 16px 40px rgba(0,0,0,.12);}
+  .creds{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.5rem;}
+  .cred{background:var(--light);border-radius:12px;padding:.8rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.9rem;font-weight:700;}
+  .cred .icon{font-size:1.3rem;}
+
+  /* FEATURES */
+  .features{background:var(--light);}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2.5rem;}
+  .feature-card{background:var(--white);border-radius:20px;padding:1.8rem;box-shadow:0 4px 20px rgba(0,0,0,.07);transition:transform .2s;}
+  .feature-card:hover{transform:translateY(-6px);}
+  .feature-icon{font-size:2.5rem;margin-bottom:.8rem;}
+  .feature-card h3{font-family:'Fredoka One',cursive;font-size:1.2rem;margin-bottom:.4rem;}
+  .feature-card p{font-size:.9rem;color:#555;line-height:1.6;}
+  .fc1{border-top:4px solid var(--coral);}
+  .fc2{border-top:4px solid var(--teal);}
+  .fc3{border-top:4px solid var(--yellow);}
+  .fc4{border-top:4px solid var(--purple);}
+
+  /* PRICING */
+  .pricing{background:var(--white);}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-top:2.5rem;}
+  .price-card{border-radius:24px;padding:2.2rem;position:relative;overflow:hidden;}
+  .pc1{background:linear-gradient(135deg,#FFD93D,#FF6B6B);color:var(--navy);}
+  .pc2{background:linear-gradient(135deg,#4ECDC4,#A855F7);color:var(--white);}
+  .popular-badge{position:absolute;top:1.2rem;right:1.2rem;background:var(--white);color:var(--purple);font-weight:800;font-size:.75rem;padding:.3rem .8rem;border-radius:50px;}
+  .price-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;margin-bottom:.3rem;}
+  .price-card .price{font-family:'Fredoka One',cursive;font-size:3rem;margin:.8rem 0 .2rem;}
+  .price-card .per{font-size:.9rem;opacity:.8;margin-bottom:1.2rem;}
+  .price-card ul{list-style:none;margin-bottom:1.8rem;}
+  .price-card li{padding:.4rem 0;font-size:.95rem;font-weight:600;}
+  .price-card li::before{content:'✓  ';}
+  .btn-card{display:block;text-align:center;padding:.8rem;border-radius:50px;font-weight:800;font-size:.95rem;text-decoration:none;background:var(--white);color:var(--navy);transition:transform .2s;}
+  .btn-card:hover{transform:scale(1.04);}
+  .pc2 .btn-card{background:var(--navy);color:var(--white);}
+
+  /* TESTIMONIALS */
+  .testimonials{background:linear-gradient(135deg,var(--navy),#312e81);color:var(--white);}
+  .testimonials h2,.testimonials .subtitle{color:var(--white);}
+  .testimonials .subtitle{opacity:.8;}
+  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem;}
+  .testi-card{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:20px;padding:1.8rem;border:1px solid rgba(255,255,255,.15);}
+  .stars{color:var(--yellow);font-size:1.1rem;margin-bottom:.8rem;}
+  .testi-card p{font-size:.95rem;line-height:1.7;margin-bottom:1rem;opacity:.9;}
+  .testi-author{display:flex;align-items:center;gap:.8rem;}
+  .avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;}
+  .av1{background:var(--yellow);}
+  .av2{background:var(--coral);}
+  .av3{background:var(--teal);}
+  .author-info strong{display:block;font-size:.9rem;}
+  .author-info span{font-size:.8rem;opacity:.7;}
+
+  /* FAQ */
+  .faq{background:var(--light);}
+  .faq-list{max-width:700px;margin:2.5rem auto 0;}
+  .faq-item{background:var(--white);border-radius:16px;margin-bottom:1rem;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+  .faq-q{width:100%;background:none;border:none;padding:1.2rem 1.5rem;text-align:left;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .faq-q .arrow{transition:transform .3s;font-size:1.2rem;}
+  .faq-q.open .arrow{transform:rotate(180deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;}
+  .faq-a.open{max-height:300px;padding:0 1.5rem 1.2rem;}
+  .faq-a p{color:#555;line-height:1.7;font-size:.95rem;}
+
+  /* CTA */
+  .cta-section{background:linear-gradient(135deg,var(--coral),var(--yellow));text-align:center;padding:5rem 2rem;}
+  .cta-section h2{font-family:'Fredoka One',cursive;font-size:clamp(2rem,5vw,3.2rem);color:var(--white);text-shadow:2px 4px 12px rgba(0,0,0,.15);margin-bottom:1rem;}
+  .cta-section p{color:var(--white);font-size:1.1rem;font-weight:600;max-width:520px;margin:0 auto 2rem;opacity:.95;}
+  .cta-section .btn-primary{background:var(--navy);}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:2rem;font-size:.9rem;}
+  footer strong{color:var(--white);}
+
+  @media(max-width:700px){
+    .about-inner{grid-template-columns:1fr;}
+    .about-img{max-width:200px;margin:0 auto;}
+    .creds{grid-template-columns:1fr;}
+    nav a:not(.nav-cta){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Reading <span>with Sydney</span></div>
+  <div>
+    <a href="#about">About</a>
+    <a href="#features">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#cta" class="nav-cta">Book a Free Call</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">🌍 Online Literacy Tutoring for Expat & Homeschool Families</div>
+  <h1>Your Child Can Learn to <em>Read</em> — Anywhere in the World</h1>
+  <p>Structured, playful, and expert-led online reading lessons for children ages 4–8. Wherever you live, Sydney brings literacy to your home.</p>
+  <div class="hero-btns">
+    <a href="#cta" class="btn btn-primary">📅 Book a Free Consultation</a>
+    <a href="#pricing" class="btn btn-secondary">See Pricing →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>10+</strong><span>Years Teaching Kids</span></div>
+    <div class="stat"><strong>4–8</strong><span>Age Range</span></div>
+    <div class="stat"><strong>100%</strong><span>Online & Flexible</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <div class="section-tag">Meet Sydney</div>
+        <h2>A Teacher Who Truly Gets It</h2>
+        <p style="color:#555;line-height:1.8;margin:1rem 0;">Hi, I'm Sydney — a certified teacher with a Master's degree in Early Childhood Education from <strong>Johns Hopkins University</strong>. I've spent over a decade helping young children learn to read, speak English, and build lifelong learning skills.</p>
+        <p style="color:#555;line-height:1.8;margin-bottom:1.2rem;">I use a <strong>direct instruction approach</strong> combined with hands-on, play-based learning — because the best readers are made through both structure and joy. I've also taught my own two children (ages 4 and 6) to read, so I truly understand both sides of this journey.</p>
+        <div class="creds">
+          <div class="cred"><span class="icon">🎓</span>M.Ed. Johns Hopkins University</div>
+          <div class="cred"><span class="icon">📖</span>Certified Reading Interventionist</div>
+          <div class="cred"><span class="icon">🏫</span>3 Years Public School Teaching</div>
+          <div class="cred"><span class="icon">🌏</span>Taught English in Japan</div>
+
+          <div class="cred"><span class="icon">👩‍👧</span>Mom of Early Readers</div>
+        </div>
+      </div>
+      <div class="about-img">👩‍🏫</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-tag">How It Works</div>
+    <h2>Why Families Love Reading with Sydney</h2>
+    <p class="subtitle">Expert literacy instruction designed for young learners — delivered live, online, wherever you call home.</p>
+    <div class="features-grid">
+      <div class="feature-card fc1">
+        <div class="feature-icon">🧠</div>
+        <h3>Science-Based Reading Instruction</h3>
+        <p>Lessons follow the Science of Reading with direct, structured phonics instruction — the proven foundation for fluent readers.</p>
+      </div>
+      <div class="feature-card fc2">
+        <div class="feature-icon">🎮</div>
+        <h3>Playful & Hands-On Learning</h3>
+        <p>Learning to read should be fun! Sydney blends structured lessons with games, activities, and materials that keep kids engaged.</p>
+      </div>
+      <div class="feature-card fc3">
+        <div class="feature-icon">🌍</div>
+        <h3>Built for Expat Families</h3>
+        <p>Flexible scheduling across time zones. American English curriculum for families raising bilingual or globally-minded kids.</p>
+      </div>
+      <div class="feature-card fc4">
+        <div class="feature-icon">👨‍👩‍👧</div>
+        <h3>Parent Partnership</h3>
+        <p>You're never left in the dark. Sydney keeps parents informed and empowered to support their child's reading journey at home.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-tag">Pricing</div>
+    <h2>Simple, Transparent Pricing</h2>
+    <p class="subtitle">Monthly enrollment with a minimum of one session per week. No contracts, no hidden fees.</p>
+    <div class="pricing-grid">
+      <div class="price-card pc1">
+        <h3>Small Group Tutoring</h3>
+        <p style="font-size:.9rem;font-weight:700;opacity:.75;">Max 4 students per group</p>
+        <div class="price">€100</div>
+        <div class="per">per child / month (4 sessions)</div>
+        <ul>
+          <li>4 live sessions per month</li>
+          <li>Small group (max 4 kids)</li>
+          <li>Ages 4–8</li>
+          <li>American English literacy focus</li>
+          <li>Parent progress updates</li>
+        </ul>
+        <a href="#cta" class="btn-card">Get Started →</a>
+      </div>
+      <div class="price-card pc2">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <h3>Private 1:1 Tutoring</h3>
+        <p style="font-size:.9rem;font-weight:700;opacity:.75;">Personalized just for your child</p>
+        <div class="price">€200</div>
+        <div class="per">per student / month (4 sessions)</div>
+        <ul>
+          <li>4 private live sessions per month</li>
+          <li>Fully personalized lessons</li>
+          <li>Ages 4–8 (gifted learners welcome)</li>
+          <li>American English curriculum</li>
+          <li>Detailed parent progress reports</li>
+        </ul>
+        <a href="#cta" class="btn-card">Book a Free Call →</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:1.5rem;color:#777;font-size:.9rem;">Not sure which option is right for your child? <a href="#cta" style="color:var(--coral);font-weight:700;">Book a free consultation</a> and we'll find the perfect fit.</p>
+  </div>
+</section>
+
+
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-tag">FAQ</div>
+    <h2 style="text-align:center;">Got Questions? We've Got Answers.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What ages do you teach? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>I specialize in teaching children ages 4–8. This includes gifted 4–5 year olds who are ready to start reading early, and 6–8 year olds who are building or strengthening their foundational literacy skills.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do online sessions work? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>All sessions are held live via video call (Zoom or a similar platform). Each session is structured, interactive, and designed to keep young learners engaged. You'll need a stable internet connection and a device with a camera. Materials and activities are shared digitally before each session.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What if we're in a different time zone? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>No problem! I work with families across multiple time zones. During your free consultation, we'll find a recurring session time that works for your family's schedule.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What curriculum or method do you use? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>I use a Science of Reading approach with structured phonics instruction (direct instruction model), combined with hands-on, play-based activities. I tailor each lesson to your child's individual learning style and pace.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is this right for non-native English speakers? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>Absolutely! My services are ideal for expat, immigrant, homeschooling, and worldschooling families who want their children to learn to read in American English — regardless of the family's home language.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How do I get started? <span class="arrow">▼</span></button>
+        <div class="faq-a"><p>Simply book a free 20-minute consultation call! We'll chat about your child's current level, your goals, and which program is the best fit. From there, we'll set up your first session.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <h2>Ready to Raise a Reader? 📚</h2>
+    <p>Book a free 20-minute consultation and let's create a reading journey your child will love — no matter where in the world you are.</p>
+    <a href="mailto:read.with.sydney@gmail.com" class="btn btn-primary" style="font-size:1.1rem;padding:1rem 2.5rem;">📅 Book Your Free Consultation</a>
+    <p style="margin-top:1.2rem;color:rgba(255,255,255,.85);font-size:.9rem;">No commitment required. Just a friendly chat to see if we're a great fit!</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Reading with Sydney, Literacy Services</strong> &nbsp;|&nbsp; Online Early Literacy Tutoring &nbsp;|&nbsp; Based in the Netherlands, serving families worldwide</p>
+  <p style="margin-top:.5rem;">📺 Watch free literacy content: <strong>Early Learning Playtime</strong> on YouTube &nbsp;|&nbsp; read.with.sydney@gmail.com</p>
+</footer>
+
+<script>
+  function toggleFaq(btn){
+    const ans = btn.nextElementSibling;
+    const isOpen = ans.classList.contains('open');
+    document.querySelectorAll('.faq-a.open').forEach(a=>a.classList.remove('open'));
+    document.querySelectorAll('.faq-q.open').forEach(b=>b.classList.remove('open'));
+    if(!isOpen){ans.classList.add('open');btn.classList.add('open');}
+  }
+</script>
+</body>
+</html>
