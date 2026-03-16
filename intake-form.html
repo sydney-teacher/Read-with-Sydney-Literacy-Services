@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Student Intake Form | Reading with Sydney</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --yellow:#FFD93D;
+    --coral:#FF6B6B;
+    --teal:#4ECDC4;
+    --purple:#A855F7;
+    --navy:#1E1B4B;
+    --white:#FFFFFF;
+    --light:#FFF9F0;
+  }
+  body{font-family:'Nunito',sans-serif;background:var(--light);color:var(--navy);overflow-x:hidden;}
+
+  /* NAV */
+  nav{background:var(--white);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+  .logo{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--coral);}
+  .logo span{color:var(--teal);}
+  nav a{text-decoration:none;color:var(--navy);font-weight:700;font-size:.95rem;}
+  nav a:hover{color:var(--coral);}
+
+  /* HEADER */
+  .form-header{background:linear-gradient(135deg,#FFD93D 0%,#FF6B6B 50%,#A855F7 100%);padding:3rem 2rem;text-align:center;}
+  .form-header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--white);text-shadow:2px 4px 12px rgba(0,0,0,.15);margin-bottom:.8rem;}
+  .form-header p{color:var(--white);font-size:1rem;font-weight:600;max-width:580px;margin:0 auto;opacity:.95;line-height:1.7;}
+
+  /* FORM WRAPPER */
+  .form-wrap{max-width:760px;margin:3rem auto;padding:0 1.5rem 4rem;}
+
+  /* SECTION CARD */
+  .form-section{background:var(--white);border-radius:20px;padding:2rem;margin-bottom:1.8rem;box-shadow:0 4px 20px rgba(0,0,0,.07);}
+  .section-heading{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--light);}
+  .section-num{background:var(--coral);color:var(--white);font-family:'Fredoka One',cursive;font-size:1.1rem;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .section-heading h2{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--navy);}
+
+  /* FIELDS */
+  .field{margin-bottom:1.4rem;}
+  .field label{display:block;font-weight:800;font-size:.95rem;margin-bottom:.5rem;color:var(--navy);}
+  .field label .req{color:var(--coral);margin-left:2px;}
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="date"],
+  .field textarea,
+  .field select{
+    width:100%;padding:.75rem 1rem;border:2px solid #e5e7eb;border-radius:12px;font-family:'Nunito',sans-serif;font-size:.95rem;color:var(--navy);background:var(--light);transition:border .2s;outline:none;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus{border-color:var(--teal);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+  /* RADIO & CHECKBOX */
+  .options{display:flex;flex-direction:column;gap:.6rem;margin-top:.3rem;}
+  .option{display:flex;align-items:flex-start;gap:.7rem;background:var(--light);border-radius:10px;padding:.65rem 1rem;cursor:pointer;transition:background .2s;}
+  .option:hover{background:#fde8e8;}
+  .option input{margin-top:2px;accent-color:var(--coral);width:16px;height:16px;flex-shrink:0;}
+  .option span{font-size:.92rem;font-weight:600;line-height:1.4;}
+  .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.3rem;}
+
+  /* SUBMIT */
+  .submit-wrap{text-align:center;margin-top:2rem;}
+  .btn-submit{background:linear-gradient(135deg,var(--coral),var(--purple));color:var(--white);border:none;padding:1rem 3rem;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(168,85,247,.3);transition:transform .2s,box-shadow .2s;}
+  .btn-submit:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(168,85,247,.4);}
+
+  /* SUCCESS */
+  .success-msg{display:none;background:linear-gradient(135deg,var(--teal),var(--purple));color:var(--white);border-radius:20px;padding:2.5rem;text-align:center;margin-top:2rem;}
+  .success-msg h3{font-family:'Fredoka One',cursive;font-size:1.8rem;margin-bottom:.8rem;}
+  .success-msg p{font-size:1rem;opacity:.9;line-height:1.7;}
+
+  /* FOOTER */
+  footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:1.5rem;font-size:.85rem;}
+  footer strong{color:var(--white);}
+
+  @media(max-width:600px){
+    .two-col{grid-template-columns:1fr;}
+    .options-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Reading <span>with Sydney</span></div>
+  <a href="index.html">← Back to Home</a>
+</nav>
+
+<div class="form-header">
+  <h1>📋 New Student Intake Form</h1>
+  <p>Early Literacy Tutoring · Ages 4–8<br>Please complete this form as fully as possible before your child's first session. Your answers help me design the most effective learning experience for your child. All information is kept strictly confidential.</p>
+</div>
+
+<div class="form-wrap">
+  <form id="intakeForm" action="https://formspree.io/f/mwvrrkrg" method="POST" onsubmit="handleSubmit(event)">
+
+    <!-- SECTION 1 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num">1</div>
+        <h2>About Your Family</h2>
+      </div>
+      <input type="hidden" name="_subject" value="New Intake Form Submission — Reading with Sydney">
+      <div class="field">
+        <label>Child's first name <span class="req">*</span></label>
+        <input type="text" name="child_first_name" placeholder="e.g. Emma" required>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Child's date of birth</label>
+          <input type="date" name="child_dob">
+        </div>
+        <div class="field">
+          <label>Child's age</label>
+          <input type="text" name="child_age" placeholder="e.g. 5 years old">
+        </div>
+      </div>
+      <div class="field">
+        <label>Parent / guardian name(s) <span class="req">*</span></label>
+        <input type="text" name="parent_name" placeholder="Your full name" required>
+      </div>
+      <div class="field">
+        <label>Email address <span class="req">*</span></label>
+        <input type="email" name="_replyto" placeholder="your@email.com" required>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Country you currently live in</label>
+          <input type="text" name="country" placeholder="e.g. Netherlands">
+        </div>
+        <div class="field">
+          <label>Time zone</label>
+          <input type="text" name="timezone" placeholder="e.g. CET (UTC+1)">
+        </div>
+      </div>
+      <div class="field">
+        <label>How did you hear about Reading with Sydney?</label>
+        <div class="options-grid">
+          <label class="option"><input type="checkbox" name="referral" value="YouTube"><span>YouTube</span></label>
+          <label class="option"><input type="checkbox" name="referral" value="Referred by a friend"><span>Referred by a friend</span></label>
+          <label class="option"><input type="checkbox" name="referral" value="Social media"><span>Social media (Instagram / Facebook)</span></label>
+          <label class="option"><input type="checkbox" name="referral" value="Referred by educator"><span>Referred by another educator</span></label>
+          <label class="option"><input type="checkbox" name="referral" value="Google/web search"><span>Google / web search</span></label>
+          <label class="option"><input type="checkbox" name="referral" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>If other, please specify</label>
+        <input type="text" name="referral_other" placeholder="Tell us how you found us">
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--teal);">2</div>
+        <h2>Your Child's Language Background</h2>
+      </div>
+      <div class="field">
+        <label>What language(s) are spoken at home? <span class="req">*</span></label>
+        <input type="text" name="home_languages" placeholder="e.g. English and Dutch" required>
+      </div>
+      <div class="field">
+        <label>Is English your child's first language, second language, or equal alongside another language? <span class="req">*</span></label>
+        <div class="options">
+          <label class="option"><input type="radio" name="english_level" value="First/home language"><span>English is their first / home language</span></label>
+          <label class="option"><input type="radio" name="english_level" value="Second language"><span>English is their second language</span></label>
+          <label class="option"><input type="radio" name="english_level" value="Equal alongside another"><span>English and another language equally</span></label>
+          <label class="option"><input type="radio" name="english_level" value="Other"><span>Other — please describe below</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Additional context</label>
+        <textarea name="language_context" placeholder="Any extra details about your child's language background..."></textarea>
+      </div>
+      <div class="field">
+        <label>What are your goals for your child's English reading?</label>
+        <textarea name="reading_goals" placeholder="e.g. reading fluency, keeping up with U.S. curriculum, preparing for school entry..."></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--yellow);color:var(--navy);">3</div>
+        <h2>Your Child's Current Reading Level</h2>
+      </div>
+      <div class="field">
+        <label>How would you describe your child's current reading ability? <span class="req">*</span></label>
+        <div class="options">
+          <label class="option"><input type="checkbox" name="reading_level" value="No letter knowledge yet"><span>No letter knowledge yet</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Knows some letters/sounds"><span>Knows some letters / letter sounds</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Knows most letters and sounds"><span>Knows most letters and sounds</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Beginning to blend sounds"><span>Beginning to blend sounds into words</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Reading simple CVC words"><span>Reading simple CVC words (cat, dog, sit)</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Reading simple sentences/short books"><span>Reading simple sentences / short books</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Reading independently but with struggles"><span>Reading independently but with struggles</span></label>
+          <label class="option"><input type="checkbox" name="reading_level" value="Fluent reader seeking enrichment"><span>Fluent reader seeking enrichment</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Has your child received any previous reading instruction or tutoring?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="prev_tutoring" value="Yes"><span>Yes</span></label>
+          <label class="option"><input type="radio" name="prev_tutoring" value="No"><span>No</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>If yes — please describe what they have tried and how it went</label>
+        <textarea name="prev_tutoring_details" placeholder="Previous programs, methods, tutors..."></textarea>
+      </div>
+      <div class="field">
+        <label>Does your child currently attend school, are they homeschooled, or something else?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="schooling" value="Attends school (traditional)"><span>Attends school (traditional)</span></label>
+          <label class="option"><input type="radio" name="schooling" value="Homeschooled"><span>Homeschooled</span></label>
+          <label class="option"><input type="radio" name="schooling" value="Worldschooling/traveling"><span>Worldschooling / traveling</span></label>
+          <label class="option"><input type="radio" name="schooling" value="Not yet in school"><span>Not yet in school</span></label>
+          <label class="option"><input type="radio" name="schooling" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>If your child attends school, what reading curriculum does their school use? (if known)</label>
+        <input type="text" name="school_curriculum" placeholder="e.g. Fundations, CKLA, unknown...">
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--purple);">4</div>
+        <h2>Your Child as a Learner</h2>
+      </div>
+      <div class="field">
+        <label>How does your child typically respond to learning new things?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="learner_type" value="Loves a challenge"><span>Loves a challenge — gets excited</span></label>
+          <label class="option"><input type="radio" name="learner_type" value="Willing but needs encouragement"><span>Usually willing but needs encouragement</span></label>
+          <label class="option"><input type="radio" name="learner_type" value="Resistant, takes time to warm up"><span>Can be resistant — takes time to warm up</span></label>
+          <label class="option"><input type="radio" name="learner_type" value="Struggles with frustration"><span>Struggles with frustration / gives up quickly</span></label>
+          <label class="option"><input type="radio" name="learner_type" value="Depends on subject/activity"><span>Depends on the subject / activity</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>What does your child love? (interests, favorite topics, characters, games, books)</label>
+        <textarea name="child_interests" placeholder="e.g. dinosaurs, Peppa Pig, drawing, Lego, superheroes..."></textarea>
+      </div>
+      <div class="field">
+        <label>How long can your child typically focus during a learning activity?</label>
+        <div class="options-grid">
+          <label class="option"><input type="radio" name="focus_time" value="Under 5 minutes"><span>Under 5 minutes</span></label>
+          <label class="option"><input type="radio" name="focus_time" value="5-10 minutes"><span>5–10 minutes</span></label>
+          <label class="option"><input type="radio" name="focus_time" value="10-15 minutes"><span>10–15 minutes</span></label>
+          <label class="option"><input type="radio" name="focus_time" value="15-20 minutes"><span>15–20 minutes</span></label>
+          <label class="option"><input type="radio" name="focus_time" value="20+ minutes"><span>20+ minutes</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Does your child have any diagnosed or suspected learning differences, sensory needs, speech/language concerns, or other factors I should be aware of?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="learning_diff" value="No known concerns"><span>No known concerns</span></label>
+          <label class="option"><input type="radio" name="learning_diff" value="Yes"><span>Yes — please describe below</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>If yes, please describe</label>
+        <textarea name="learning_diff_details" placeholder="Any details that will help me support your child..."></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--coral);">5</div>
+        <h2>Goals & Expectations</h2>
+      </div>
+      <div class="field">
+        <label>What are your top 1–2 goals for your child by the end of our first 3 months working together? <span class="req">*</span></label>
+        <textarea name="goals_3_months" placeholder="e.g. I'd love for my child to be able to sound out simple words independently..." required></textarea>
+      </div>
+      <div class="field">
+        <label>Is there anything specific that has NOT worked for your child in the past that you'd like me to avoid?</label>
+        <textarea name="avoid_methods" placeholder="e.g. flashcard drills, long sitting sessions, pressure to perform..."></textarea>
+      </div>
+      <div class="field">
+        <label>How involved would you like to be in the lesson process?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="parent_involvement" value="Very involved"><span>Very involved — I want to sit in and learn alongside</span></label>
+          <label class="option"><input type="radio" name="parent_involvement" value="Somewhat involved"><span>Somewhat — brief check-ins and a summary after each session</span></label>
+          <label class="option"><input type="radio" name="parent_involvement" value="Hands-off"><span>Hands-off — I trust you to lead, just update me on progress</span></label>
+          <label class="option"><input type="radio" name="parent_involvement" value="Flexible"><span>Flexible — I'll follow your recommendation</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--teal);">6</div>
+        <h2>Scheduling & Logistics</h2>
+      </div>
+      <div class="field">
+        <label>What days and times generally work best for sessions? (Please include your time zone)</label>
+        <textarea name="scheduling" placeholder="e.g. Weekday mornings, CET time zone — Monday and Wednesday around 10am work well..."></textarea>
+      </div>
+      <div class="field">
+        <label>Do you have a quiet, distraction-free space where your child can join online sessions?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="quiet_space" value="Yes, reliably"><span>Yes, reliably</span></label>
+          <label class="option"><input type="radio" name="quiet_space" value="Usually, but tricky"><span>Usually, but it can be tricky</span></label>
+          <label class="option"><input type="radio" name="quiet_space" value="Working on it"><span>Working on it</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>What device will your child be using for sessions?</label>
+        <div class="options">
+          <label class="option"><input type="radio" name="device" value="Laptop/desktop"><span>Laptop / desktop computer</span></label>
+          <label class="option"><input type="radio" name="device" value="iPad/tablet"><span>iPad / tablet</span></label>
+          <label class="option"><input type="radio" name="device" value="Not sure yet"><span>Not sure yet</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7 -->
+    <div class="form-section">
+      <div class="section-heading">
+        <div class="section-num" style="background:var(--purple);">7</div>
+        <h2>Anything Else?</h2>
+      </div>
+      <div class="field">
+        <label>Is there anything else you'd like me to know about your child before our first session?</label>
+        <textarea name="anything_else" placeholder="Anything at all — no detail is too small!"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="btn-submit">📨 Submit Intake Form</button>
+      <p style="margin-top:1rem;font-size:.85rem;color:#777;">Your information is kept strictly confidential and will only be used to support your child's learning.</p>
+    </div>
+
+  </form>
+
+  <div class="success-msg" id="successMsg">
+    <div style="font-size:3rem;margin-bottom:.5rem;">🎉</div>
+    <h3>Thank you for submitting!</h3>
+    <p>I've received your intake form and will be in touch soon at the email address you provided. I can't wait to meet your little reader!<br><br>— Sydney 📚</p>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Reading with Sydney, Literacy Services</strong> &nbsp;|&nbsp; Online Early Literacy Tutoring &nbsp;|&nbsp; Based in the Netherlands, serving families worldwide</p>
+  <p style="margin-top:.5rem;">Questions? Email: <strong>read.with.sydney@gmail.com</strong></p>
+</footer>
+
+<script>
+  function handleSubmit(e){
+    e.preventDefault();
+    document.getElementById('intakeForm').style.display='none';
+    const msg = document.getElementById('successMsg');
+    msg.style.display='block';
+    window.scrollTo({top: msg.offsetTop - 40, behavior:'smooth'});
+  }
+</script>
+
+</body>
+</html>
